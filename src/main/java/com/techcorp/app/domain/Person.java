@@ -1,4 +1,4 @@
-package com.techcorp.app;
+package com.techcorp.app.domain;
 
 public class Person {
     private String firstName;
@@ -13,7 +13,6 @@ public class Person {
         this.company = company;
     }
 
-    // Gettery, settery i toString() dla wyświetlania danych
     public String getFirstName() {
         return firstName;
     }
