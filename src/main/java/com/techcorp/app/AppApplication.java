@@ -28,13 +28,13 @@ public class AppApplication {
 		System.out.println(secretary);
 
 		EmployeeService employeeService = context.getBean(EmployeeService.class);
-		employeeService.displayAllEmployees();
+		employeeService.getEmployees();
 
-		List<Person> twitterEmployees = employeeService.filterByCompany("Poland");
+		List<Person> employees = employeeService.getEmployeesByCompany("Poland");
 		System.out.println("Employees from Poland:");
-		twitterEmployees.forEach(System.out::println);
+		employees.forEach(System.out::println);
 
 		System.out.println("Employees sorted by last name:");
-		employeeService.displaySortedEmployees();
+		employeeService.getSortedEmployees();
 	}
 }
