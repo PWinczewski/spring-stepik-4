@@ -19,7 +19,9 @@ public class Company {
         boolean first = true;
         try (CSVReader reader = new CSVReader(new FileReader(csvFilePath))) {
             String[] line;
+
             while ((line = reader.readNext()) != null) {
+
                 if (!first) employees.add(new Person(line[0], line[1], line[2], line[5]));
                 else first = false;
             }
@@ -28,14 +30,18 @@ public class Company {
         }
     }
 
+    public List<Person> getEmployees() {
+        return employees;
+    }
+
     public void displayAllEmployees() {
         System.out.println("Employees from CSV:");
         employees.forEach(System.out::println);
     }
 
-    public List<Person> filterByCompany(String companyName) {
+    public List<Person> filterByCountry(String countryName) {
         return employees.stream()
-                .filter(employee -> employee.getCompany().equalsIgnoreCase(companyName))
+                .filter(employee -> employee.getCountry().equalsIgnoreCase(countryName))
                 .collect(Collectors.toList());
     }
 

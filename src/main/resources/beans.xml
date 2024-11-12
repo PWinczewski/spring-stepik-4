@@ -5,6 +5,7 @@
          http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="ceo" class="com.techcorp.app.domain.Person">
+        <constructor-arg value="0" />
         <constructor-arg value="Chrystal" />
         <constructor-arg value="Havoc" />
         <constructor-arg value="chavocr@yahoo.com" />
@@ -12,6 +13,7 @@
     </bean>
 
     <bean id="vp" class="com.techcorp.app.domain.Person">
+        <constructor-arg value="1" />
         <constructor-arg value="Halley" />
         <constructor-arg value="Gadaud" />
         <constructor-arg value="hgadaud9@sohu.com" />
@@ -19,6 +21,7 @@
     </bean>
 
     <bean id="secretary" class="com.techcorp.app.domain.Person">
+        <constructor-arg value="2" />
         <constructor-arg value="Kirbie" />
         <constructor-arg value="Wrettum" />
         <constructor-arg value="kwrettumj@slideshare.net" />

@@ -14,7 +14,7 @@ public class EmployeeService {
     @Qualifier("company")
     Company company;
 
-    Company getCompany(){
+    public Company getCountry(){
         return company;
     }
 
@@ -24,7 +24,7 @@ public class EmployeeService {
     public void getSortedEmployees(){
         company.displaySortedEmployees();
     }
-    public List<Person> getEmployeesByCompany(String companyName){
-        return company.filterByCompany(companyName);
+    public List<Person> getEmployeesByCountry(String countryName){
+        return company.filterByCountry(countryName);
     }
 }

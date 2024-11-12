@@ -1,16 +1,27 @@
 package com.techcorp.app.domain;
+import java.util.UUID;
 
 public class Person {
     private String firstName;
     private String lastName;
     private String email;
-    private String company;
+    private String country;
+    private UUID id;
 
-    public Person(String firstName, String lastName, String email, String company) {
+    public Person(String firstName, String lastName, String email, String country) {
+        this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.company = company;
+        this.country = country;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -37,17 +48,17 @@ public class Person {
         this.email = email;
     }
 
-    public String getCompany() {
-        return company;
+    public String getCountry() {
+        return country;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     @Override
     public String toString() {
-        return "Person [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", company=" + company + "]";
+        return "Person [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", company=" + country + "]";
     }
 }
 
