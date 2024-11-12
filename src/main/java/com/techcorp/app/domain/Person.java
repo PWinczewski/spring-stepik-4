@@ -7,13 +7,17 @@ public class Person {
     private String email;
     private String country;
     private UUID id;
+    private String currency;
+    private double salary;
 
-    public Person(String firstName, String lastName, String email, String country) {
+    public Person(String firstName, String lastName, String email, double salary, String currency, String country) {
         this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.country = country;
+        this.currency = currency;
+        this.salary = salary;
     }
 
     public UUID getId() {
@@ -54,6 +58,22 @@ public class Person {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     @Override

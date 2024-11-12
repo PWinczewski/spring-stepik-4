@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+
+<body>
+<div th:replace="header :: header"></div>
+
+<div class="container">
+
+    <h2>Employee List</h2>
+
+    <h3>Salary Summary by Currency</h3>
+    <ul>
+        <li th:each="entry : ${salarySummary}">
+            <span th:text="${entry.key}"></span>: <span th:text="${entry.value}"></span>
+        </li>
+    </ul>
+
+    <form th:action="@{/employees}" method="get">
+        <label for="country">Filter by Country:</label>
+        <select name="country" id="country">
+            <option value="" th:selected="${selectedCountry == null or selectedCountry == ''}">-- Select a Country --</option>
+            <option th:each="country : ${countries}" th:value="${country}" th:text="${country}"
+                    th:selected="${country == selectedCountry}"></option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Salary</th>
+            <th>Currency</th>
+            <th>Country</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employees}">
+            <td th:text="${employee.firstName}"></td>
+            <td th:text="${employee.lastName}"></td>
+            <td><a th:href="@{/employees/details/{email}(email=${employee.email})}" th:text="${employee.email}"></a></td>
+            <td th:text="${employee.salary}"></td>
+            <td th:text="${employee.currency}"></td>
+            <td th:text="${employee.country}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div th:replace="footer :: footer"></div>
+</body>
+</html>

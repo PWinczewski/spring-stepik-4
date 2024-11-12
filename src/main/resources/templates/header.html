@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${pageTitle}">Employee Management</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header>
+    <h1>Employee Management System</h1>
+    <nav>
+        <a th:href="@{/employees}">Home</a>
+    </nav>
+    <p>Total Employees: <span th:text="${employeeCount}"></span></p>
+    <hr>
+</header>

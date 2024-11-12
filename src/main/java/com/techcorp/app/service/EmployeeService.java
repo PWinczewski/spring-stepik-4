@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -18,12 +20,30 @@ public class EmployeeService {
         return company;
     }
 
-    public void getEmployees(){
-        company.displayAllEmployees();
+    public List<Person> getEmployees(){
+        return company.getEmployees();
     }
+
+    public Optional<Person> getEmployeeById(String id){
+        return company.getEmployeeById(id);
+    }
+
+    public Optional<Person> getEmployeeByEmail(String email){
+        return company.getEmployeeByEmail(email);
+    }
+
+    public Map<String, String> getSalarySummary() {
+        return company.getSalarySummary();
+    }
+
+    public List<String> getCountries(){
+        return company.getCountries();
+    }
+
     public void getSortedEmployees(){
         company.displaySortedEmployees();
     }
+
     public List<Person> getEmployeesByCountry(String countryName){
         return company.filterByCountry(countryName);
     }
