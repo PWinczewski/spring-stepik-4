@@ -2,11 +2,13 @@ package com.techcorp.app.controller;
 
 import com.techcorp.app.domain.Person;
 import com.techcorp.app.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,7 +44,7 @@ public class EmployeeController {
 
     @PostMapping
     public ResponseEntity<Person> addEmployee(@RequestBody Person newEmployee) {
-        employeeService.getCountry().getEmployees().add(newEmployee);
+        employeeService.getEmployees().add(newEmployee);
         return new ResponseEntity<>(newEmployee, HttpStatus.CREATED);
     }
 

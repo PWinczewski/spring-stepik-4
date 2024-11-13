@@ -1,14 +1,43 @@
 package com.techcorp.app.domain;
 import java.util.UUID;
 
+import com.techcorp.app.validation.AllowedCurrency;
+import com.techcorp.app.validation.UniqueEmail;
+import jakarta.validation.constraints.*;
+
 public class Person {
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String country;
     private UUID id;
+
+    @NotBlank(message = "First name is required")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
+    @Pattern(regexp = "[a-zA-Z-]+", message = "First name must contain only letters and '-' symbols")
+    private String firstName;
+
+    @NotBlank(message = "Last name is required")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
+    @Pattern(regexp = "[a-zA-Z-]+", message = "Last name must contain only letters and '-' symbols")
+    private String lastName;
+
+    @NotBlank(message = "Email is required")
+    @Email(message = "Must be a valid email")
+    @UniqueEmail
+    private String email;
+
+    @NotBlank(message = "Country is required")
+    private String country;
+
+    @NotBlank(message = "Currency is required")
+    @AllowedCurrency
     private String currency;
+
+    @NotNull(message = "Salary is required")
+    @Positive
+    @DecimalMax(value = "1000000.0", message = "Salary must not exceed 1,000,000")
     private double salary;
+
+    public Person(){
+        this.id = UUID.randomUUID();
+    }
 
     public Person(String firstName, String lastName, String email, double salary, String currency, String country) {
         this.id = UUID.randomUUID();

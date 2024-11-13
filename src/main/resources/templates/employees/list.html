@@ -17,14 +17,14 @@
         </li>
     </ul>
 
-    <form th:action="@{/employees}" method="get">
+    <form th:action="@{/}" method="get">
         <label for="country">Filter by Country:</label>
         <select name="country" id="country">
             <option value="" th:selected="${selectedCountry == null or selectedCountry == ''}">-- Select a Country --</option>
             <option th:each="country : ${countries}" th:value="${country}" th:text="${country}"
                     th:selected="${country == selectedCountry}"></option>
         </select>
-        <button type="submit">Filter</button>
+
     </form>
 
     <table>
@@ -42,10 +42,12 @@
         <tr th:each="employee : ${employees}">
             <td th:text="${employee.firstName}"></td>
             <td th:text="${employee.lastName}"></td>
-            <td><a th:href="@{/employees/details/{email}(email=${employee.email})}" th:text="${employee.email}"></a></td>
+            <td><a th:href="@{/details/{email}(email=${employee.email})}" th:text="${employee.email}"></a></td>
             <td th:text="${employee.salary}"></td>
             <td th:text="${employee.currency}"></td>
             <td th:text="${employee.country}"></td>
+            <td><a th:href="@{/update/{id}(id=${employee.id})}">Update</a></td>
+
         </tr>
         </tbody>
     </table>
