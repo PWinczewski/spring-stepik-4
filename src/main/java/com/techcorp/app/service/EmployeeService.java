@@ -47,4 +47,10 @@ public class EmployeeService {
     public List<Person> getEmployeesByCountry(String countryName){
         return company.filterByCountry(countryName);
     }
+
+    public void addEmployee(Person newEmployee) { company.addEmployee(newEmployee); }
+
+    public void updateEmployee(Person updatedEmployee) { company.updateEmployee(updatedEmployee); }
+
+    public boolean isEmailExist(String email, String currentEmail) { return company.isEmailExists(email, currentEmail); };
 }
