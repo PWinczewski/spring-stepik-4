@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -79,14 +81,26 @@ public class HomeController {
     }
 
     @PostMapping("/update/{id}")
-    public String processUpdateEmployeeForm(@PathVariable String id, @Valid Person employee, Errors errors, Model model){
-        if(errors.hasErrors()){
+    public String processUpdateEmployeeForm(@PathVariable String id, @Valid Person employee, Errors errors, Model model) {
+        RequestContextHolder.currentRequestAttributes().setAttribute("currentEmployeeId", id, RequestAttributes.SCOPE_REQUEST);
+
+        if (errors.hasErrors()) {
             model.addAttribute("employeeCount", employeeService.getEmployees().size());
             model.addAttribute("countries", employeeService.getCountries());
             return "employees/personUpdateForm";
         }
-        log.info("employee updated: {}", employee);
-        employeeService.getEmployees().add(employee);
+
+        Person existingEmployee = employeeService.getEmployeeById(id).orElse(null);
+        if (existingEmployee != null) {
+            existingEmployee.setFirstName(employee.getFirstName());
+            existingEmployee.setLastName(employee.getLastName());
+            existingEmployee.setCountry(employee.getCountry());
+            existingEmployee.setCurrency(employee.getCurrency());
+            existingEmployee.setSalary(employee.getSalary());
+            if (!existingEmployee.getEmail().equals(employee.getEmail())) {
+                existingEmployee.setEmail(employee.getEmail());
+            }
+        }
         return "redirect:/";
     }
 
