@@ -12,63 +12,69 @@
 
 <h1>Create person form</h1>
 
-<form method="POST" th:action="@{/create}" th:object="${person}">
-    <h1>Create person</h1>
-    <div th:if="${#fields.hasErrors()}">
-          <span class="validationError">
-             Please correct the problems below and resubmit.
-          </span>
-    </div>
+    <div th:if="${person}">
+    <form method="POST" th:action="@{/create}" th:object="${person}">
+        <h1>Create person</h1>
+        <div th:if="${#fields.hasErrors()}">
+              <span class="validationError">
+                 Please correct the problems below and resubmit.
+              </span>
+        </div>
 
-    <label for="firstName">First Name:</label>
-    <input type="text" th:field="*{firstName}" id="firstName"/>
-    <span class="validationError"
-          th:if="${#fields.hasErrors('firstName')}"
-          th:errors="*{firstName}">First Name Error</span>
-    <br/>
+        <label for="firstName">First Name:</label>
+        <input type="text" th:field="*{firstName}" id="firstName"/>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('firstName')}"
+              th:errors="*{firstName}">First Name Error</span>
+        <br/>
 
-    <label for="lastName">Last Name:</label>
-    <input type="text" th:field="*{lastName}" id="lastName"/>
-    <span class="validationError"
-          th:if="${#fields.hasErrors('lastName')}"
-          th:errors="*{lastName}">Last Name Error</span>
-    <br/>
+        <label for="lastName">Last Name:</label>
+        <input type="text" th:field="*{lastName}" id="lastName"/>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('lastName')}"
+              th:errors="*{lastName}">Last Name Error</span>
+        <br/>
 
-    <label for="email">Email:</label>
-    <input type="email" th:field="*{email}" id="email"/>
-    <span class="validationError"
-          th:if="${#fields.hasErrors('email')}"
-          th:errors="*{email}">Email Error</span>
-    <br/>
+        <label for="email">Email:</label>
+        <input type="email" th:field="*{email}" id="email"/>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('email')}"
+              th:errors="*{email}">Email Error</span>
+        <br/>
 
-    <label for="country">Country:</label>
-    <select th:field="*{country}" id="country">
-        <option value="">Select a Country</option>
-        <option th:each="country : ${countries}"
-                th:value="${country}"
-                th:text="${country}"></option>
-    </select>
-    <span class="validationError"
-          th:if="${#fields.hasErrors('country')}"
-          th:errors="*{country}">Country Error</span>
-    <br/>
+        <label for="country">Country:</label>
+        <select th:field="*{country}" id="country">
+            <option value="">Select a Country</option>
+            <option th:each="country : ${countries}"
+                    th:value="${country}"
+                    th:text="${country}"></option>
+        </select>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('country')}"
+              th:errors="*{country}">Country Error</span>
+        <br/>
 
-    <label for="currency">Currency:</label>
-    <input type="text" th:field="*{currency}" id="currency"/>
-    <span class="validationError"
-          th:if="${#fields.hasErrors('currency')}"
-          th:errors="*{currency}">Currency Error</span>
-    <br/>
+        <label for="currency">Currency:</label>
+        <input type="text" th:field="*{currency}" id="currency"/>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('currency')}"
+              th:errors="*{currency}">Currency Error</span>
+        <br/>
 
-    <label for="salary">Salary:</label>
-    <input type="number" th:field="*{salary}" id="salary" step="0.01"/>
-    <span class="validationError"
-          th:if="${#fields.hasErrors('salary')}"
-          th:errors="*{salary}">Salary Error</span>
-    <br/>
+        <label for="salary">Salary:</label>
+        <input type="number" th:field="*{salary}" id="salary" step="0.01"/>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('salary')}"
+              th:errors="*{salary}">Salary Error</span>
+        <br/>
 
-    <button type="submit">Submit</button>
-</form>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div th:if="${error}">
+    <p class="error" th:text="${error}"></p>
+</div>
 
 <div th:replace="footer :: footer"></div>
 </body>

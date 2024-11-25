@@ -1,6 +1,8 @@
 package com.techcorp.app.domain;
 
 import com.opencsv.CSVReader;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.io.FileReader;
 import java.util.*;
@@ -77,6 +79,26 @@ public class Company {
     public List<String> getCountries() {
         return employees.stream()
                 .map(Person::getCountry).distinct().collect(Collectors.toList());
+    }
+
+    public void updateEmployee(Person updatedEmployee) {
+        for (int i = 0; i < employees.size(); i++) {
+            if (Objects.equals(employees.get(i).getId(), updatedEmployee.getId())) {
+                employees.set(i, updatedEmployee);
+                return;
+            }
+        }
+    }
+
+    public void addEmployee(Person newEmployee) {
+        employees.add(newEmployee);
+    }
+
+    public boolean isEmailExists(String email, String currentEmail) {
+        if (email.equals(currentEmail)) {
+            return false; // No conflict if it's the same email
+        }
+        return getEmployeeByEmail(email).orElse(null) != null;
     }
 }
 
