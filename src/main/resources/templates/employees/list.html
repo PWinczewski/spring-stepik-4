@@ -10,6 +10,14 @@
 
     <h2>Employee List</h2>
 
+    <h3>Import Employees</h3>
+    <form th:action="@{/import}" method="post" enctype="multipart/form-data">
+        <label for="file">Upload CSV File:</label>
+        <input type="file" id="file" name="file" accept=".csv" required>
+        <button type="submit">Upload</button>
+    </form>
+
+
     <h3>Salary Summary by Currency</h3>
     <ul>
         <li th:each="entry : ${salarySummary}">

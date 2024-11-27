@@ -9,7 +9,7 @@ public class EmployeeServiceConfig {
 
   @Bean
   public Company company() {
-    return new Company("src/main/resources/MOCK_DATA.csv");
+    return new Company();
   }
 
 }

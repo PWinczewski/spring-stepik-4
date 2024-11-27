@@ -2,15 +2,20 @@ package com.techcorp.app.controller;
 
 import com.techcorp.app.domain.Person;
 import com.techcorp.app.service.EmployeeService;
+import com.techcorp.app.service.FileService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,10 +25,12 @@ public class EmployeeController {
 
     private static final Logger log = LoggerFactory.getLogger(EmployeeController.class);
     private final EmployeeService employeeService;
+    private final FileService fileService;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService, FileService fileService) {
         this.employeeService = employeeService;
+        this.fileService = fileService;
     }
 
     @GetMapping
@@ -43,7 +50,12 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Person> addEmployee(@RequestBody Person newEmployee) {
+    public ResponseEntity<Person> addEmployee(@RequestBody Person newEmployee,
+                                              @RequestParam("image") MultipartFile image) throws IOException {
+        if (!image.isEmpty()) {
+            String fileName = fileService.saveFile(image);
+            newEmployee.setImagePath(fileName);
+        }
         employeeService.getEmployees().add(newEmployee);
         return new ResponseEntity<>(newEmployee, HttpStatus.CREATED);
     }
@@ -70,5 +82,14 @@ public class EmployeeController {
             }
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/image/{fileName:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable String fileName) {
+        Resource file = fileService.loadFileAsResource(fileName);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .body(file);
     }
 }

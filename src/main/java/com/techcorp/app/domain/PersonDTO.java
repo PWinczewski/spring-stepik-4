@@ -6,6 +6,7 @@ import com.techcorp.app.validation.AllowedCurrency;
 import com.techcorp.app.validation.UniqueEmail;
 import jakarta.validation.constraints.*;
 
+@UniqueEmail
 public class PersonDTO {
     private UUID id;
 
@@ -21,7 +22,6 @@ public class PersonDTO {
 
     @NotBlank(message = "Email is required")
     @Email(message = "Must be a valid email")
-    @UniqueEmail
     private String email;
 
     @NotBlank(message = "Current email is required")
@@ -40,11 +40,11 @@ public class PersonDTO {
     @DecimalMax(value = "1000000.0", message = "Salary must not exceed 1,000,000")
     private double salary;
 
-    public Person(){
+    public PersonDTO(){
         this.id = UUID.randomUUID();
     }
 
-    public Person(String firstName, String lastName, String email, double salary, String currency, String country) {
+    public PersonDTO(String firstName, String lastName, String email, double salary, String currency, String country) {
         this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -112,7 +112,7 @@ public class PersonDTO {
 
     @Override
     public String toString() {
-        return "Person [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", company=" + country + "]";
+        return "PersonDTO [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", company=" + country + "]";
     }
 }
 

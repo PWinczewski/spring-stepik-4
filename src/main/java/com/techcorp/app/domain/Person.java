@@ -5,6 +5,7 @@ import com.techcorp.app.validation.AllowedCurrency;
 import com.techcorp.app.validation.UniqueEmail;
 import jakarta.validation.constraints.*;
 
+@UniqueEmail
 public class Person {
     private UUID id;
 
@@ -20,7 +21,6 @@ public class Person {
 
     @NotBlank(message = "Email is required")
     @Email(message = "Must be a valid email")
-    @UniqueEmail
     private String email;
 
     @NotBlank(message = "Country is required")
@@ -35,11 +35,14 @@ public class Person {
     @DecimalMax(value = "1000000.0", message = "Salary must not exceed 1,000,000")
     private double salary;
 
+    private String imagePath;
+
     public Person(){
         this.id = UUID.randomUUID();
     }
 
-    public Person(String firstName, String lastName, String email, double salary, String currency, String country) {
+    public Person(String firstName, String lastName, String email, double salary, String currency, String country, String imagePath) {
+        this.imagePath = imagePath;
         this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -108,6 +111,14 @@ public class Person {
     @Override
     public String toString() {
         return "Person [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", company=" + country + "]";
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }
 

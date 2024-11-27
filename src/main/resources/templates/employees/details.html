@@ -15,6 +15,7 @@
         <p><strong>Email:</strong> <span th:text="${employee.email}"></span></p>
         <p><strong>Salary:</strong> <span th:text="${employee.salary}"></span> <span th:text="${employee.currency}"></span></p>
         <p><strong>Country:</strong> <span th:text="${employee.country}"></span></p>
+        <img th:if="${employee.imagePath}" th:src="@{/image/{fileName}(fileName=${employee.imagePath})}" style="max-width: 100px;">
     </div>
 
     <div th:if="${error}">

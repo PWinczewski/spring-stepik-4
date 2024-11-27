@@ -1,5 +1,6 @@
 package com.techcorp.app.validation;
 
+import com.techcorp.app.domain.Person;
 import com.techcorp.app.service.EmployeeService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -8,24 +9,37 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 
-public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
-    @Autowired
-    private EmployeeService employeeService;
+public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, Person> {
 
-    public void initialize(UniqueEmail constraint) {
+    private final EmployeeService employeeService;
+
+    UniqueEmailValidator(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @Override
-    public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {
-        if (email == null || email.isBlank()) {
-            return true;
+    public boolean isValid(Person person, ConstraintValidatorContext context) {
+        if (person.getId() != null) {
+            var employee = employeeService.getEmployeeById(person.getId().toString()).orElse(null);
+
+            if (employee!=null) {
+                var isSameAsPreviousEmail = employee.getEmail().equalsIgnoreCase(person.getEmail());
+
+                if (isSameAsPreviousEmail) {
+                    return true;
+                }
+            }
         }
 
-        String currentEmployeeId = (String) RequestContextHolder.currentRequestAttributes()
-                .getAttribute("currentEmployeeId", RequestAttributes.SCOPE_REQUEST);
+        var isEmailUnique =
+                employeeService.getEmployees().stream().noneMatch(p -> p.getEmail().equalsIgnoreCase(person.getEmail()));
+        if (!isEmailUnique) {
+            context.buildConstraintViolationWithTemplate(context.getDefaultConstraintMessageTemplate())
+                    .addPropertyNode("email")
+                    .addConstraintViolation();
+            return false;
+        }
 
-        return employeeService.getEmployees().stream()
-                .filter(person -> !person.getId().toString().equals(currentEmployeeId))
-                .noneMatch(person -> person.getEmail().equalsIgnoreCase(email));
+        return true;
     }
 }

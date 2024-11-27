@@ -13,7 +13,7 @@
 <h1>Update person form</h1>
 
 <div th:if="${person}">
-    <form method="POST" th:object="${person}">
+    <form method="POST" th:object="${person}" enctype="multipart/form-data">
         <h1>Update person</h1>
         <div th:if="${#fields.hasErrors()}">
               <span class="validationError">
@@ -67,6 +67,9 @@
               th:if="${#fields.hasErrors('salary')}"
               th:errors="*{salary}">Salary Error</span>
         <br/>
+
+        <label class="form-label">Image:</label>
+        <input type="file" name="image" accept="image/*">
 
         <button type="submit">Submit</button>
     </form>
